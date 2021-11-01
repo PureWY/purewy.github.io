@@ -18,7 +18,7 @@
         
     </title>
 
-    <link rel="canonical" href="https://github.com/PureWY/purewy.github.io/2018/12/15/从无到有的Node-js-Vue-MongoDB前后端分离项目2/">
+    <link rel="canonical" href="https://purewy.github.io/2018/12/15/从无到有的Node-js-Vue-MongoDB前后端分离项目2/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -226,7 +226,7 @@
 </blockquote>
 <h1><span id="搭建前台">搭建前台</span></h1>
 <hr>
-<p>首先初始化一个 Vue 脚手架，官方提供了很多种，具体请看<a href="https://github.com/vuejs/vue-cli/tree/master">这里</a>，我是选用了其中的<a href="https://github.com/vuejs-templates/webpack">webpack</a>，也许我的目录结构与你们的不同，这是因为新版的已经升级到 vue-cli 3，些许不同没有关系。大致目录如下：</p>
+<p>首先初始化一个 Vue 脚手架，官方提供了很多种，具体请看<a href="https://github.com/vuejs/vue-cli/tree/master" target="_blank" rel="noopener">这里</a>，我是选用了其中的<a href="https://github.com/vuejs-templates/webpack" target="_blank" rel="noopener">webpack</a>，也许我的目录结构与你们的不同，这是因为新版的已经升级到 vue-cli 3，些许不同没有关系。大致目录如下：</p>
 <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── build/                      # webpack<span class="built_in"> config </span>files</span><br><span class="line">│   └── <span class="built_in">..</span>.</span><br><span class="line">├── config/</span><br><span class="line">│   ├── index.js                # main project config</span><br><span class="line">│   └── <span class="built_in">..</span>.</span><br><span class="line">├── src/</span><br><span class="line">│   ├── main.js                 # app entry file</span><br><span class="line">│   ├── App.vue                 # main app component</span><br><span class="line">│   ├── components/             # ui components</span><br><span class="line">│   │   └── <span class="built_in">..</span>.</span><br><span class="line">│   └── assets/                 # module assets (processed by webpack)</span><br><span class="line">│       └── <span class="built_in">..</span>.</span><br><span class="line">├── static/                     # pure static assets (directly copied)</span><br><span class="line">├── test/</span><br><span class="line">│   └── unit/                   # unit tests</span><br><span class="line">│   │   ├── specs/              # test spec files</span><br><span class="line">│   │   ├── eslintrc            #<span class="built_in"> config </span>file <span class="keyword">for</span> eslint with extra<span class="built_in"> settings </span>only <span class="keyword">for</span> unit tests</span><br><span class="line">│   │   ├── index.js            # test build entry file</span><br><span class="line">│   │   ├── jest.conf.js        #<span class="built_in"> Config </span>file when using Jest <span class="keyword">for</span> unit tests</span><br><span class="line">│   │   └── karma.conf.js       # test runner<span class="built_in"> config </span>file when using Karma <span class="keyword">for</span> unit tests</span><br><span class="line">│   │   ├── setup.js            # file that runs before Jest runs your unit tests</span><br><span class="line">│   └── e2e/                    # e2e tests</span><br><span class="line">│   │   ├── specs/              # test spec files</span><br><span class="line">│   │   ├── custom-assertions/  # custom assertions <span class="keyword">for</span> e2e tests</span><br><span class="line">│   │   ├── runner.js           # test runner script</span><br><span class="line">│   │   └── nightwatch.conf.js  # test runner<span class="built_in"> config </span>file</span><br><span class="line">├── .babelrc                    # babel config</span><br><span class="line">├── .editorconfig               # indentation, spaces/tabs <span class="keyword">and</span> similar<span class="built_in"> settings </span><span class="keyword">for</span> your editor</span><br><span class="line">├── .eslintrc.js                # eslint config</span><br><span class="line">├── .eslintignore               # eslint ignore rules</span><br><span class="line">├── .gitignore                  # sensible defaults <span class="keyword">for</span> gitignore</span><br><span class="line">├── .postcssrc.js               # postcss config</span><br><span class="line">├── index.html                  # index.html template</span><br><span class="line">├── package.json                # build scripts <span class="keyword">and</span> dependencies</span><br><span class="line">└── README.md                   #<span class="built_in"> Default </span>README file</span><br></pre></td></tr></table></figure>
 <p>这是官方的目录结构详解，我就不一一阐述了。了解了大概目录以后，我们开始下一步。</p>
 <p>通过 package.json 文件可以看到项目中引入了哪些插件，可以一个个的装上：</p>
@@ -346,8 +346,8 @@
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "your-disqus-ID";
-    var disqus_identifier = "https://github.com/PureWY/purewy.github.io/2018/12/15/从无到有的Node-js-Vue-MongoDB前后端分离项目2/";
-    var disqus_url = "https://github.com/PureWY/purewy.github.io/2018/12/15/从无到有的Node-js-Vue-MongoDB前后端分离项目2/";
+    var disqus_identifier = "https://purewy.github.io/2018/12/15/从无到有的Node-js-Vue-MongoDB前后端分离项目2/";
+    var disqus_url = "https://purewy.github.io/2018/12/15/从无到有的Node-js-Vue-MongoDB前后端分离项目2/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -481,7 +481,7 @@
 <script>
     // only load tagcloud.js in tag.html
     if($('#tag_cloud').length !== 0){
-        async("https://github.com/PureWY/purewy.github.io/js/jquery.tagcloud.js",function(){
+        async("https://purewy.github.io/js/jquery.tagcloud.js",function(){
             $.fn.tagcloud.defaults = {
                 //size: {start: 1, end: 1, unit: 'em'},
                 color: {start: '#bbbbee', end: '#0085a1'},
@@ -530,7 +530,7 @@
 	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
     <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
 <!-- Image to hack wechat -->
-<img src="https://github.com/PureWY/purewy.github.io/img/icon_wechat.png" width="0" height="0" />
+<img src="https://purewy.github.io/img/icon_wechat.png" width="0" height="0" />
 <!-- Migrate from head to bottom, no longer block render and still work -->
 
 </body>
